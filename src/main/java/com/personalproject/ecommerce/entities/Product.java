@@ -1,5 +1,6 @@
 package com.personalproject.ecommerce.entities;
 
+import com.personalproject.ecommerce.dtos.ProductDTO;
 import jakarta.persistence.*;
 
 import java.util.*;
