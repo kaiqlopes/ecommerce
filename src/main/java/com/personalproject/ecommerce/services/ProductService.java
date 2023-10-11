@@ -2,9 +2,11 @@ package com.personalproject.ecommerce.services;
 
 import com.personalproject.ecommerce.dtos.ProductDTO;
 import com.personalproject.ecommerce.entities.Product;
+import com.personalproject.ecommerce.exceptions.DatabaseException;
 import com.personalproject.ecommerce.exceptions.ResourceNotFoundException;
 import com.personalproject.ecommerce.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -45,6 +47,19 @@ public class ProductService {
         copyDtoToEntity(dto, result);
         result = repository.save(result);
         return new ProductDTO(result);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Resource not found");
+        }
+
+        try {
+            repository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Referential integrity violation");
+        }
     }
 
     private void copyDtoToEntity(ProductDTO dto, Product entity) {
