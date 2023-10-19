@@ -1,12 +1,23 @@
 package com.personalproject.ecommerce.dtos;
 
 import com.personalproject.ecommerce.entities.Product;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 public class ProductDTO {
 
     private Long id;
+
+    @NotBlank(message = "Required Field")
+    @Size(min = 5, max = 300, message = "Product name needs to have between 5 and 300 characters")
     private String name;
+
+    @Positive(message = "Product price must be positive")
     private Double price;
+
+    @NotBlank
+    @Size(min = 10, message = "Product description needs at least 10 characters")
     private String description;
     private String imgUrl;
 

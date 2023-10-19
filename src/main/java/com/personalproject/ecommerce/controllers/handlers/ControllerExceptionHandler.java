@@ -1,12 +1,10 @@
 package com.personalproject.ecommerce.controllers.handlers;
 
 import com.personalproject.ecommerce.dtos.CustomError;
-import com.personalproject.ecommerce.dtos.FieldMessage;
 import com.personalproject.ecommerce.dtos.ValidationError;
 import com.personalproject.ecommerce.exceptions.DatabaseException;
 import com.personalproject.ecommerce.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

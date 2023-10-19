@@ -1,7 +1,8 @@
 package com.personalproject.ecommerce.controllers;
 
-import com.personalproject.ecommerce.dtos.ProductDTO;
-import com.personalproject.ecommerce.services.ProductService;
+import com.personalproject.ecommerce.dtos.UserDTO;
+import com.personalproject.ecommerce.entities.User;
+import com.personalproject.ecommerce.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,34 +14,35 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping(value = "/products")
-public class ProductController {
+@RequestMapping(value = "/users")
+public class UserController {
 
     @Autowired
-    private ProductService service;
+    private UserService service;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
-        ProductDTO dto = service.findById(id);
+    public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
+        UserDTO dto = service.findById(id);
         return ResponseEntity.ok(dto);
     }
 
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable) {
-        Page<ProductDTO> result = service.findAll(pageable);
-        return ResponseEntity.ok(result);
+    public ResponseEntity<Page<UserDTO>> findAll(Pageable pageable) {
+        Page<UserDTO> dto = service.findAll(pageable);
+        return ResponseEntity.ok(dto);
     }
 
     @PostMapping
-    public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductDTO dto) {
+    public ResponseEntity<UserDTO> insert(@Valid @RequestBody UserDTO dto) {
         dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
+
         return ResponseEntity.created(uri).body(dto);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @Valid @RequestBody ProductDTO dto) {
+    public ResponseEntity<UserDTO> update(@PathVariable Long id,@Valid @RequestBody UserDTO dto) {
         dto = service.update(id, dto);
         return ResponseEntity.ok(dto);
     }
@@ -50,4 +52,5 @@ public class ProductController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
 }
